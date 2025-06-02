@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPS Calculator</title>
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js" defer></script>
+</head>
+<body>
+
+    <h1>DPS Calculator</h1>
+    <small class="text-muted">By: Veylance (GinoongR0KI)</small>
+
+    <div class="row">
+        <div class="form-group col-12 col-md-6">
+            <label for="dps-inDmg">Input Damage</label>
+            <input class="form-control" id="dps-inDmg" name="dps-inDmg" type="number" />
+        </div>
+
+        <div class="form-group col-12 col-md-6">
+            <label for="dps-inAtkSpd">Input Damage</label>
+            <input class="form-control" id="dps-inAtkSpd" name="dps-inAtkSpd" type="number" />
+        </div>
+
+        <button class="btn btn-primary" id="btn-Calculate" role="button">Calculate</button>
+    </div>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>1 second</th>
+                <th>5 seconds</th>
+                <th>10 seconds</th>
+                <th>30 seconds</th>
+                <th>60 seconds</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="dps-out1s"></td>
+                <td id="dps-out5s"></td>
+                <td id="dps-out10s"></td>
+                <td id="dps-out30s"></td>
+                <td id="dps-out60s"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
