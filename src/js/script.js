@@ -13,26 +13,28 @@ function calculateDPS(seconds) {
 
 function appendDPS() {
     let tr          = document.createElement("tr");
-    let inDps       = document.createElement("td");
-    let o1s         = document.createElement("td");
-    let o5s         = document.createElement("td");
-    let o10s        = document.createElement("td");
-    let o30s        = document.createElement("td");
-    let o60s        = document.createElement("td");
+    let outTD       = {
+        stats:      document.createElement("td"),
+        o1s:        document.createElement("td"),
+        o5s:        document.createElement("td"),
+        o10s:       document.createElement("td"),
+        o30s:       document.createElement("td"),
+        o60s:       document.createElement("td")
+    }
 
-    tr.appendChild(inDps);
-    tr.appendChild(o1s);
-    tr.appendChild(o5s);
-    tr.appendChild(o10s);
-    tr.appendChild(o30s);
-    tr.appendChild(o60s);
+    // Append the <td> elements to the <tr>
+    Object.keys(outTD).forEach((key) => {
+        tr.appendChild(outTD[key]);
+    });
 
-    inDps.innerHTML = comp_inDmg.value + " / " + comp_inAtkSpd.value;
-    o1s.innerHTML   = this.calculateDPS(1).toFixed(2);
-    o5s.innerHTML   = this.calculateDPS(5).toFixed(2);
-    o10s.innerHTML  = this.calculateDPS(10).toFixed(2);
-    o30s.innerHTML  = this.calculateDPS(30).toFixed(2);
-    o60s.innerHTML  = this.calculateDPS(60).toFixed(2);
+    // Add content to the <td> elements
+    outTD.stats.innerHTML = "D: " + comp_inDmg.value + " / AS: " + comp_inAtkSpd.value;
+    outTD.o1s.innerHTML   = this.calculateDPS(1).toFixed(2);
+    outTD.o5s.innerHTML   = this.calculateDPS(5).toFixed(2);
+    outTD.o10s.innerHTML  = this.calculateDPS(10).toFixed(2);
+    outTD.o30s.innerHTML  = this.calculateDPS(30).toFixed(2);
+    outTD.o60s.innerHTML  = this.calculateDPS(60).toFixed(2);
 
+    // Append the <tr> to the output table
     comp_outTable.appendChild(tr);
 }
