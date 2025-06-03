@@ -1,3 +1,7 @@
-.stats-custom > td {
-    background-color: cyan;
+.stats-modAtk > td {
+    background-color: darkorange;
+}
+
+.stats-modSpd > td {
+    background-color: lightblue;
 }

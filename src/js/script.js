@@ -1,17 +1,38 @@
+// MARK: Variable for Elements
 const comp_inDmg        = document.getElementById("dps-inDmg");
 const comp_inAtkSpd     = document.getElementById("dps-inAtkSpd");
-const comp_isCustom     = document.getElementById("dps-isCustom");
+const comp_marker       = {
+    custom: document.getElementById("dps-isNone"),
+    atk:    document.getElementById("dps-isAtk"),
+    spd:    document.getElementById("dps-isSpd")
+};
 const compBtn_Calculate = document.getElementById("btn-Calculate");
 const comp_outTable     = document.getElementById("dps-outTable");
 
-compBtn_Calculate.addEventListener("click", (event) => {
+// MARK: Input Decimal Points
+// Add change event to keep input fields value with decimal point
+comp_inDmg.addEventListener("change", () => {
+    if (comp_inDmg.value % 1 == 0) comp_inDmg.value = parseFloat(comp_inDmg.value).toFixed(1);
+});
+comp_inAtkSpd.addEventListener("change", () => {
+    if (comp_inAtkSpd.value % 1 == 0) comp_inAtkSpd.value = parseFloat(comp_inAtkSpd.value).toFixed(1);
+});
+// Initially trigger input change events
+comp_inDmg.dispatchEvent(new Event("change"));
+comp_inAtkSpd.dispatchEvent(new Event("change"));
+
+// MARK: Submit Functionality
+compBtn_Calculate.addEventListener("click", () => {
     this.appendDPS();
 });
 
-function calculateDPS(seconds) {
-    return parseFloat((comp_inAtkSpd.value * comp_inDmg.value) * seconds);
+// MARK: DPS Calculation
+function calculateDPS(seconds, decimalPoints = 2) {
+    return parseFloat((comp_inAtkSpd.value * comp_inDmg.value) * seconds).toFixed(decimalPoints);
 }
 
+// MARK: Append Table Row
+// Comes with populated data
 function appendDPS() {
     let tr          = document.createElement("tr");
     let outTD       = {
@@ -30,15 +51,18 @@ function appendDPS() {
         tr.appendChild(outTD[key]);
     });
 
-    if (comp_isCustom.checked) tr.classList.add("stats-custom");
+    // Customize Highlight
+    if (comp_marker.atk.checked) tr.classList.add("stats-modAtk");
+    if (comp_marker.spd.checked) tr.classList.add("stats-modSpd");
+    comp_marker.custom.checked = true; // Reset the marker for row type
 
     // Add content to the <td> elements
-    outTD.stats.innerHTML = "D: " + comp_inDmg.value + " / AS: " + comp_inAtkSpd.value;
-    outTD.o1s.innerHTML   = this.calculateDPS(1).toFixed(2);
-    outTD.o5s.innerHTML   = this.calculateDPS(5).toFixed(2);
-    outTD.o10s.innerHTML  = this.calculateDPS(10).toFixed(2);
-    outTD.o30s.innerHTML  = this.calculateDPS(30).toFixed(2);
-    outTD.o60s.innerHTML  = this.calculateDPS(60).toFixed(2);
+    outTD.stats.innerHTML = parseFloat(comp_inDmg.value).toFixed(2) + " / " + parseFloat(comp_inAtkSpd.value).toFixed(2);
+    outTD.o1s.innerHTML   = this.calculateDPS(1);
+    outTD.o5s.innerHTML   = this.calculateDPS(5);
+    outTD.o10s.innerHTML  = this.calculateDPS(10);
+    outTD.o30s.innerHTML  = this.calculateDPS(30);
+    outTD.o60s.innerHTML  = this.calculateDPS(60);
     // Extra column for notes
     outTD.notes.appendChild(inNotes);
     inNotes.classList.add("form-control");
